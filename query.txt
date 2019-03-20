@@ -1,0 +1,20 @@
+ create table users(
+ 	id SERIAL primary key, 
+ 	firstname varchar(50) not null, 
+ 	lastname varchar(50) not null, 
+ 	username varchar(50) not null unique, 
+ 	email varchar(50) not null unique, 
+ 	password varchar(50) not null, 
+ 	created_on date default now()
+ );
+
+ create table messages(
+ 	id SERIAL primary key,
+ 	sender_id integer not null references users(id),
+ 	receiver_id integer not null references users(id),
+ 	parent_message_id integer,
+ 	subject varchar(120),
+ 	message text not null,
+  	status varchar(30) not null,
+ 	created_on date default now()
+ );

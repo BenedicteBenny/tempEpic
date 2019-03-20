@@ -1,14 +1,23 @@
 import { Router } from 'express';
-import Mails from '../controllers/emailControlles'
+import Messages from '../controllers/emailControlles';
+import { requireAuth } from '../middlewares';
 const routers= Router();
 
-routers.get('/messages', Mails.allmails);
-routers.get('/messages/received/:id', Mails.allReceivedMail);
-routers.get('/messages/unread/:id', Mails.unreadMail)
-routers.get('/messages/sent/:id',Mails.sentMail)
-routers.get('/messages/:id',Mails.emailById);
-routers.delete('/messages/:id',Mails.deleteEmail);
-routers.post('/messages/send', Mails.sendMail);
+//create new message
+routers.post('/messages', requireAuth, Messages.sendMessage);
+//read all received messages
+routers.get('/messages', requireAuth, Messages.readMessage);
+//read all sent, unread and draft messages
+routers.get('/messages/:status', requireAuth, Messages.readMessages);
 
+// update message status 
+// delete message
+
+
+// create group
+// add user into group
+// delete user into group
+// get group mails
+// 
 
 export default routers;

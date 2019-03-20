@@ -3,16 +3,16 @@ import pool from "./index"
 
 export const createTable=()=>{
     const users=`CREATE TABLE IF NOT EXISTS users(
-        id SERIAL NOT NULL UNIQUE,
+        id SERIAL PRIMARY KEY,
         firstname VARCHAR(150) NOT NULL,
         lastname VARCHAR(150) NOT NULL,
         email VARCHAR(150) NOT NULL UNIQUE,
-        username VARCHAR(150) NOT NULL,
+        username VARCHAR(150) NOT NULL UNIQUE,
         password VARCHAR(150) NOT NULL
     )`
 
     const mails=`CREATE TABLE IF NOT EXISTS mails(
-        id SERIAL NOT NULL UNIQUE,
+        id SERIAL PRIMARY KEY,
         sender_id integer NOT NULL,
         receiver_id integer NOT NULL,
         primary_message_id integer NOT NULL,
@@ -30,7 +30,7 @@ export const createTable=()=>{
     )`
     
     const group_message=`CREATE TABLE IF NOT EXISTS groupname (
-        id SERIAL NOT NULL UNIQUE,
+        id SERIAL PRIMARY KEY,
         mail_id INTEGER NOT NULL,
         role VARCHAR(1500) NOT NULL,
         createdOn TIMESTAMP,
@@ -40,17 +40,18 @@ export const createTable=()=>{
     )`
 
     const user_message=`CREATE TABLE IF NOT EXISTS usermessage (
-        id SERIAL NOT NULL UNIQUE,
+        id SERIAL PRIMARY KEY,
         action VARCHAR(1500) NOT NULL,
         mail_id INTEGER NOT NULL,
         createdOn TIMESTAMP,
+        user_id INTEGER NOT NULL,
         user_id INTEGER NOT NULL,
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
         FOREIGN KEY (mail_id) REFERENCES mails(id) ON DELETE CASCADE
     )`
 
     const groupUsers=`CREATE TABLE IF NOT EXISTS usergroup (
-        id SERIAL NOT NULL UNIQUE,
+        id SERIAL PRIMARY KEY,
         group_id INTEGER NOT NULL,
         user_role VARCHAR(100),
         createdOn TIMESTAMP,

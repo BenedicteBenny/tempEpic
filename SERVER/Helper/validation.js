@@ -229,28 +229,25 @@ export default class Validate {
 		}
 		return result.error;
 	}
-
-	/*
-		“id” : Integer, // message unique id
-		“createdOn” : DateTime,
-		“subject” : String,
-		“message” : String,
-		”parentMessageId” : Integer,
-		“status” : String,
-	*/
-	/**
-	 * 
-	 * @param {*} message 
-	 */
 	static sendMessage(message) {
 		const schema = Joi.object()
 			.keys({
-				recipientUsername: Joi.string().trim().alphanum().min(3).max(30).required(),
+				receiver: Joi.string().trim().alphanum().min(3).max(30).required(),
 				subject: Joi.string().trim().min(3).max(120).required(),
 				message: Joi.string().trim().min(3).max(500).required()
 			});
 
 		const result = Joi.validate(message, schema, { abortEarly: false});
+		
+		if(result.error !== null) {
+			return formatError(result.error.details);
+		}
+		return result.error;
+	}
+	static readMessages(status) {
+		const schema = Joi.string().trim().alphanum().min(3).max(30).required();
+
+		const result = Joi.validate(status, schema, { abortEarly: false});
 		
 		if(result.error !== null) {
 			return formatError(result.error.details);

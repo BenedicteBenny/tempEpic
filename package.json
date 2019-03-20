@@ -31,6 +31,7 @@
     "test": " nyc --require babel-core/register mocha ./SERVER/test/*.test.js --timeout 1000 --exit",
     "start": " babel-node SERVER/index.js",
     "dev": "nodemon --exec babel-node  ./SERVER/index.js",
+    "debug": "nodemon --inspect --exec babel-node  ./SERVER/index.js",
     "coveralls": "npm test  && nyc report --reporter=text-lcov | coveralls",
     "database": "nodemon  --require babel-core/register ./SERVER/database/index.js",
     "create-tables": "node --require babel-core/register ./SERVER/database/createTable.js createTable",
